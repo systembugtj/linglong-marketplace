@@ -1,24 +1,50 @@
-/* Linglong 玲珑 — jade, lacquer, amber */
+/*
+ * 玲珑 Linglong — 青瓷玉光
+ * 玲珑剔透：清透、精巧、温润，非沉郁暗色。
+ * 灵感：白玉、青瓷釉、晨光透玉。
+ */
 :root {
-  --bg-deep: #070b0f;
-  --bg-panel: #0e1419;
-  --bg-elevated: #151d24;
-  --border: #24333c;
-  --border-soft: rgba(82, 201, 168, 0.18);
-  --text: #eef5f3;
-  --text-muted: #8fa8a3;
-  --accent: #52c9a8;
-  --accent-bright: #6fe0be;
-  --accent-dim: #2a8f74;
-  --accent-glow: rgba(82, 201, 168, 0.14);
-  --amber: #e8c468;
-  --amber-dim: #c9a24e;
-  --cinnabar: #e07a5f;
-  --danger: #d45757;
-  --code-fg: #b8ead9;
+  /* Surfaces */
+  --bg-deep: #edf5f1;
+  --bg-panel: #ffffff;
+  --bg-elevated: #f6fbf8;
+  --bg-code: #e3f0ea;
+
+  /* Ink & glaze */
+  --border: #b8d4c8;
+  --border-soft: rgba(42, 168, 130, 0.35);
+  --text: #1a3229;
+  --text-muted: #4a6b60;
+
+  /* 翠玉 — primary jade */
+  --accent: #1f9d7a;
+  --accent-bright: #2ec49a;
+  --accent-dim: #157a5f;
+  --accent-glow: rgba(46, 196, 154, 0.22);
+  --glow-jade: rgba(46, 196, 154, 0.18);
+  --glow-jade-soft: rgba(46, 196, 154, 0.1);
+  --hover-jade: rgba(31, 157, 122, 0.14);
+
+  /* 赤金 — ornament */
+  --amber: #b8862e;
+  --amber-dim: #946b22;
+  --glow-gold: rgba(184, 134, 46, 0.14);
+  --glow-gold-soft: rgba(184, 134, 46, 0.08);
+
+  /* Accents */
+  --cinnabar: #c94f42;
+  --danger: #c94444;
+  --code-fg: #0d4f3c;
+  --text-on-accent: #ffffff;
+
+  /* Chrome */
   --radius: 10px;
   --font-sans: "Plus Jakarta Sans", "Noto Sans SC", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
   --rail-width: 220px;
-  --shadow-panel: 0 12px 40px rgba(0, 0, 0, 0.35);
+  --shadow-panel: 0 10px 36px rgba(26, 50, 41, 0.07);
+  --shadow-rail: 4px 0 28px rgba(26, 50, 41, 0.1);
+  --btn-primary-shadow: 0 4px 18px rgba(31, 157, 122, 0.32);
+  --header-tint: rgba(255, 255, 255, 0.72);
+  --footer-tint: rgba(237, 245, 241, 0.95);
 }
