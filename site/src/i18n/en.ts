@@ -44,8 +44,7 @@ export const en: Messages = {
     fastest: "Fastest install (macOS / Linux, Claude CLI required):",
     pluginHint:
       "Inside Claude Code you can also use /plugin commands (Git HTTPS source, not the Pages URL). See Install below.",
-    catalogNote:
-      "This page lists every skill and plugin in marketplace",
+    catalogNote: "This page lists every skill and plugin in marketplace",
     catalogNoteSuffix:
       ", generated from .claude-plugin/marketplace.json and each SKILL.md.",
     machineReadable: "Machine-readable:",
@@ -53,51 +52,34 @@ export const en: Messages = {
   install: {
     title: "Install",
     tabs: {
-      quick: "Quick install",
-      ghPages: "GitHub Pages",
-      marketplace: "Claude Code",
-      clone: "Clone",
+      quick: "curl / install.sh",
+      plugin: "/plugin commands",
       copySkills: "~/.claude/skills",
     },
     quick: {
       note:
-        "Run in a macOS / Linux terminal (Claude Code CLI required). The script registers {name} and installs all plugins.",
-      source: "Source repo:",
-      oneLiner: "One-liner (recommended)",
+        "Standard plugin marketplace install: the script runs claude plugin marketplace add with the Git repo URL, then claude plugin install <plugin>@{name} for each plugin. Requires the Claude Code CLI.",
+      curlHead: "One-liner (recommended)",
       copyCurl: "Copy curl install",
       viewScript: "View install.sh",
-      localRun: "Clone then run locally",
+      cloneHead: "Clone then run install.sh",
+      cloneNote:
+        "Same as curl: install.sh registers the remote Git marketplace and installs all plugins. Do not point marketplace add at a local clone path.",
+      cliHead: "Equivalent CLI (what install.sh runs)",
       copyCli: "Copy CLI commands",
-      copyPagesCurl: "Copy Pages curl",
     },
-    ghPages: {
+    plugin: {
       note:
-        "linglong-marketplace deploys to GitHub Pages via GitHub Actions: push to main to rebuild this site. Browse skills here; register the marketplace in Claude Code with the Git repo (not the Pages URL).",
-      stepOpen: "Open the Pages site:",
-      stepGit: "Git repository:",
-      stepIndex: "Machine-readable index:",
-      stepRegister: "Register marketplace in Claude Code (git source) and install plugins:",
-      copyClaude: "Copy Claude install commands",
-      copyLinks: "Copy Pages links",
-      manifest: "Marketplace manifest (git raw):",
-    },
-    marketplace: {
-      note: "Add the repo as a marketplace, then install plugins as needed.",
+        "Paste these inside a Claude Code session. Use the Git HTTPS repo URL (same as install.sh)—not the Pages URL and not a local clone path.",
       gitSource: "Git source:",
-      manifest: "Manifest:",
-      pluginsDir: "Plugin packages live under",
-      copyPlugin: "Copy /plugin commands",
+      stepAdd: "Register marketplace (remote Git repo)",
+      stepInstall: "Install plugins (install only the ones you need)",
+      copySlash: "Copy /plugin commands",
       docs: "Docs:",
-    },
-    clone: {
-      note:
-        "After cloning, register a local path as a marketplace or run sh install.sh.",
-      copyHttps: "Copy HTTPS clone URL",
-      copyOneLiner: "Copy one-liner",
     },
     copySkills: {
       note:
-        "Without a marketplace, copy skill folders into your global Claude skills directory.",
+        "Advanced: without the plugin marketplace, copy skill folders into ~/.claude/skills (no plugin metadata or update flow).",
       copyCmd: "Copy command",
     },
   },

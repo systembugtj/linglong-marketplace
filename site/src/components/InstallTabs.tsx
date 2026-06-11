@@ -1,28 +1,18 @@
 import { useCallback, useState, type KeyboardEvent } from "react";
 import { useLocale } from "../i18n/LocaleContext";
-import { LOCALE_ZH } from "../i18n/types";
 import { CLAUDE_PLUGINS_DOCS_URL } from "../lib/constants";
 import {
   buildClaudeInstallCommands,
   buildCliInstallCommands,
   buildCurlInstallCommand,
-  buildCurlInstallFromPages,
-  buildGhPagesBrowseLines,
 } from "../lib/installCommands";
 import type { SiteCatalog, Skill } from "../types/catalog";
 
 const TAB_QUICK = "quick";
-const TAB_GH_PAGES = "gh-pages";
-const TAB_MARKETPLACE = "marketplace";
-const TAB_CLONE = "clone";
+const TAB_PLUGIN = "plugin";
 const TAB_COPY = "copy";
 
-type TabId =
-  | typeof TAB_QUICK
-  | typeof TAB_GH_PAGES
-  | typeof TAB_MARKETPLACE
-  | typeof TAB_CLONE
-  | typeof TAB_COPY;
+type TabId = typeof TAB_QUICK | typeof TAB_PLUGIN | typeof TAB_COPY;
 
 type Props = {
   catalog: SiteCatalog;
@@ -39,8 +29,9 @@ function tabIdRole(
   };
 }
 
+/** Install UI aligned with install.sh: marketplace add (git URL) + plugin install. */
 export function InstallTabs({ catalog, onCopy }: Props) {
-  const { locale, messages: t } = useLocale();
+  const { messages: t } = useLocale();
   const [active, setActive] = useState<TabId>(TAB_QUICK);
 
   const select = useCallback((id: TabId) => {
@@ -61,27 +52,15 @@ export function InstallTabs({ catalog, onCopy }: Props) {
     [select],
   );
 
-  const tabs: TabId[] = [
-    TAB_QUICK,
-    TAB_GH_PAGES,
-    TAB_MARKETPLACE,
-    TAB_CLONE,
-    TAB_COPY,
-  ];
+  const tabs: TabId[] = [TAB_QUICK, TAB_PLUGIN, TAB_COPY];
 
   const curlCmd = buildCurlInstallCommand(catalog);
-  const curlPagesCmd = buildCurlInstallFromPages(catalog);
-  const installCmd = buildClaudeInstallCommands(catalog);
+  const slashCmd = buildClaudeInstallCommands(catalog);
   const cliCmd = buildCliInstallCommands(catalog);
-  const browseLines = buildGhPagesBrowseLines(catalog).join("\n");
-  const cloneBlock = `git clone ${catalog.cloneUrl}\ncd ${catalog.repoName}`;
-  const cloneOneLiner = `git clone ${catalog.cloneUrl} && cd ${catalog.repoName}`;
-  const pluginList = catalog.plugins.map((p) => p.name).join(t.listSep);
+  const cloneInstallBlock = `git clone ${catalog.cloneUrl}\ncd ${catalog.repoName}\nsh install.sh`;
 
   const q = tabIdRole(TAB_QUICK, active);
-  const gp = tabIdRole(TAB_GH_PAGES, active);
-  const m = tabIdRole(TAB_MARKETPLACE, active);
-  const c = tabIdRole(TAB_CLONE, active);
+  const p = tabIdRole(TAB_PLUGIN, active);
   const cp = tabIdRole(TAB_COPY, active);
 
   return (
@@ -105,42 +84,14 @@ export function InstallTabs({ catalog, onCopy }: Props) {
           <button
             type="button"
             role="tab"
-            id="tab-gh-pages"
-            aria-controls="panel-gh-pages"
-            aria-selected={gp.selected}
-            tabIndex={gp.tabIndex}
-            onClick={() => select(TAB_GH_PAGES)}
+            id="tab-plugin"
+            aria-controls="panel-plugin"
+            aria-selected={p.selected}
+            tabIndex={p.tabIndex}
+            onClick={() => select(TAB_PLUGIN)}
             onKeyDown={(e) => onKeyDown(e, tabs, 1)}
           >
-            {t.install.tabs.ghPages}
-          </button>
-        </li>
-        <li role="presentation">
-          <button
-            type="button"
-            role="tab"
-            id="tab-marketplace"
-            aria-controls="panel-marketplace"
-            aria-selected={m.selected}
-            tabIndex={m.tabIndex}
-            onClick={() => select(TAB_MARKETPLACE)}
-            onKeyDown={(e) => onKeyDown(e, tabs, 2)}
-          >
-            {t.install.tabs.marketplace}
-          </button>
-        </li>
-        <li role="presentation">
-          <button
-            type="button"
-            role="tab"
-            id="tab-clone"
-            aria-controls="panel-clone"
-            aria-selected={c.selected}
-            tabIndex={c.tabIndex}
-            onClick={() => select(TAB_CLONE)}
-            onKeyDown={(e) => onKeyDown(e, tabs, 3)}
-          >
-            {t.install.tabs.clone}
+            {t.install.tabs.plugin}
           </button>
         </li>
         <li role="presentation">
@@ -152,7 +103,7 @@ export function InstallTabs({ catalog, onCopy }: Props) {
             aria-selected={cp.selected}
             tabIndex={cp.tabIndex}
             onClick={() => select(TAB_COPY)}
-            onKeyDown={(e) => onKeyDown(e, tabs, 4)}
+            onKeyDown={(e) => onKeyDown(e, tabs, 2)}
           >
             {t.install.tabs.copySkills}
           </button>
@@ -175,11 +126,7 @@ export function InstallTabs({ catalog, onCopy }: Props) {
             Claude Code CLI
           </a>
         </p>
-        <p className="note tight">
-          {t.install.quick.source}{" "}
-          <a href={catalog.repositoryUrl}>{catalog.repositoryUrl}</a>
-        </p>
-        <h3 className="subhead">{t.install.quick.oneLiner}</h3>
+        <h3 className="subhead">{t.install.quick.curlHead}</h3>
         <pre className="code-block">{curlCmd}</pre>
         <div className="copy-row">
           <button
@@ -198,119 +145,45 @@ export function InstallTabs({ catalog, onCopy }: Props) {
             {t.install.quick.viewScript}
           </a>
         </div>
-        <h3 className="subhead">{t.install.quick.localRun}</h3>
-        <pre className="code-block">{`git clone ${catalog.cloneUrl}\ncd ${catalog.repoName}\nsh install.sh`}</pre>
+        <h3 className="subhead">{t.install.quick.cloneHead}</h3>
+        <p className="note tight">{t.install.quick.cloneNote}</p>
+        <pre className="code-block">{cloneInstallBlock}</pre>
+        <h3 className="subhead">{t.install.quick.cliHead}</h3>
+        <pre className="code-block">{cliCmd}</pre>
         <div className="copy-row">
           <button type="button" className="btn" onClick={() => onCopy(cliCmd)}>
             {t.install.quick.copyCli}
           </button>
-          <button
-            type="button"
-            className="btn"
-            onClick={() => onCopy(curlPagesCmd)}
-          >
-            {t.install.quick.copyPagesCurl}
-          </button>
         </div>
       </div>
 
       <div
         role="tabpanel"
-        id="panel-gh-pages"
-        className={`tabpanel${active === TAB_GH_PAGES ? " is-active" : ""}`}
-        hidden={active !== TAB_GH_PAGES}
+        id="panel-plugin"
+        className={`tabpanel${active === TAB_PLUGIN ? " is-active" : ""}`}
+        hidden={active !== TAB_PLUGIN}
       >
-        <p className="note">{t.install.ghPages.note}</p>
-        <ol className="install-steps">
-          <li>
-            {t.install.ghPages.stepOpen}{" "}
-            <a href={catalog.pagesUrl}>{catalog.pagesUrl}</a>
-          </li>
-          <li>
-            {t.install.ghPages.stepGit}{" "}
-            <a href={catalog.repositoryUrl}>{catalog.repositoryUrl}</a>
-          </li>
-          <li>
-            {t.install.ghPages.stepIndex}{" "}
-            <a href={catalog.pagesCatalogUrl}>catalog.json</a>
-            {t.listSep}
-            <a href={catalog.pagesManifestUrl}>manifest.json</a>
-          </li>
-          <li>{t.install.ghPages.stepRegister}</li>
-        </ol>
-        <pre className="code-block">{installCmd}</pre>
-        <div className="copy-row">
-          <button type="button" className="btn" onClick={() => onCopy(installCmd)}>
-            {t.install.ghPages.copyClaude}
-          </button>
-          <button type="button" className="btn" onClick={() => onCopy(browseLines)}>
-            {t.install.ghPages.copyLinks}
-          </button>
-        </div>
-        <p className="note note-spaced">
-          {t.install.ghPages.manifest}{" "}
-          <a href={catalog.marketplaceManifestRawUrl}>
-            <code>.claude-plugin/marketplace.json</code>
-          </a>
-        </p>
-      </div>
-
-      <div
-        role="tabpanel"
-        id="panel-marketplace"
-        className={`tabpanel${active === TAB_MARKETPLACE ? " is-active" : ""}`}
-        hidden={active !== TAB_MARKETPLACE}
-      >
-        <p className="note">
-          {t.install.marketplace.note}{" "}
-          <code>{catalog.marketplaceName}</code>
-          {locale === LOCALE_ZH ? `（${pluginList}）。` : ` (${pluginList}).`}
-        </p>
+        <p className="note">{t.install.plugin.note}</p>
         <ul className="install-bullets">
           <li>
-            {t.install.marketplace.gitSource}{" "}
-            <code>{catalog.cloneUrl}</code>
+            {t.install.plugin.gitSource} <code>{catalog.cloneUrl}</code>
           </li>
           <li>
-            {t.install.marketplace.manifest}{" "}
-            <code>.claude-plugin/marketplace.json</code>
+            {t.install.plugin.stepAdd}:{" "}
+            <code>/plugin marketplace add {catalog.cloneUrl}</code>
           </li>
-          <li>
-            {t.install.marketplace.pluginsDir} <code>plugins/</code>
-          </li>
+          <li>{t.install.plugin.stepInstall}:</li>
         </ul>
-        <pre className="code-block">{installCmd}</pre>
+        <pre className="code-block">{slashCmd}</pre>
         <div className="copy-row">
-          <button type="button" className="btn" onClick={() => onCopy(installCmd)}>
-            {t.install.marketplace.copyPlugin}
+          <button type="button" className="btn btn-primary" onClick={() => onCopy(slashCmd)}>
+            {t.install.plugin.copySlash}
           </button>
         </div>
         <p className="note note-spaced">
-          {t.install.marketplace.docs}{" "}
+          {t.install.plugin.docs}{" "}
           <a href={CLAUDE_PLUGINS_DOCS_URL}>Claude Code plugins</a>
         </p>
-      </div>
-
-      <div
-        role="tabpanel"
-        id="panel-clone"
-        className={`tabpanel${active === TAB_CLONE ? " is-active" : ""}`}
-        hidden={active !== TAB_CLONE}
-      >
-        <p className="note">{t.install.clone.note}</p>
-        <pre className="code-block">{cloneBlock}</pre>
-        <div className="copy-row">
-          <button
-            type="button"
-            className="btn"
-            onClick={() => onCopy(catalog.cloneUrl)}
-          >
-            {t.install.clone.copyHttps}
-          </button>
-          <button type="button" className="btn" onClick={() => onCopy(cloneOneLiner)}>
-            {t.install.clone.copyOneLiner}
-          </button>
-        </div>
       </div>
 
       <div

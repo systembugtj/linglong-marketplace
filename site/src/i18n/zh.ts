@@ -52,49 +52,34 @@ export const zh: Messages = {
   install: {
     title: "安装",
     tabs: {
-      quick: "快速安装",
-      ghPages: "GitHub Pages",
-      marketplace: "Claude Code",
-      clone: "Clone",
+      quick: "curl / install.sh",
+      plugin: "/plugin 命令",
       copySkills: "~/.claude/skills",
     },
     quick: {
       note:
-        "在 macOS / Linux 终端运行（需已安装 Claude Code CLI）。脚本会注册 {name} 并安装全部 plugin。",
-      source: "源码仓库：",
-      oneLiner: "一行命令（推荐）",
+        "标准 plugin marketplace 安装：脚本通过 claude plugin marketplace add 注册 Git 仓库，再 claude plugin install <plugin>@{name}。需已安装 Claude Code CLI。",
+      curlHead: "一行命令（推荐）",
       copyCurl: "复制 curl 安装",
       viewScript: "查看 install.sh",
-      localRun: "克隆后本地运行",
+      cloneHead: "克隆后运行 install.sh",
+      cloneNote:
+        "与 curl 相同：install.sh 使用 Git HTTPS 源注册 marketplace 并安装全部 plugin，不要把本地目录当作 marketplace 源。",
+      cliHead: "等价 CLI 命令（install.sh 内部逻辑）",
       copyCli: "复制 CLI 命令",
-      copyPagesCurl: "复制 Pages 版 curl",
     },
-    ghPages: {
+    plugin: {
       note:
-        "linglong-marketplace 通过 GitHub Actions 部署到 GitHub Pages：推送 main 后自动构建本目录站。在此浏览 skill 列表；在 Claude Code 里用 Git 仓库注册 marketplace（不是 Pages URL）。",
-      stepOpen: "打开 Pages 站点：",
-      stepGit: "Git 仓库：",
-      stepIndex: "机器可读索引：",
-      stepRegister: "在 Claude Code 注册 marketplace（git 源）并安装 plugin：",
-      copyClaude: "复制 Claude 安装命令",
-      copyLinks: "复制 Pages 链接",
-      manifest: "Marketplace manifest（git raw）：",
-    },
-    marketplace: {
-      note: "将仓库添加为 marketplace，再按需安装 plugin。",
+        "在 Claude Code 会话内粘贴以下命令。必须使用 Git HTTPS 仓库地址（与 install.sh 相同），不要使用 Pages URL，也不要注册本地克隆路径。",
       gitSource: "Git 源：",
-      manifest: "Manifest：",
-      pluginsDir: "Plugin 包位于",
-      copyPlugin: "复制 /plugin 命令",
+      stepAdd: "注册 marketplace（远程 Git 仓库）",
+      stepInstall: "安装各 plugin（按需可只装部分）",
+      copySlash: "复制 /plugin 命令",
       docs: "文档：",
     },
-    clone: {
-      note: "克隆仓库后，可将本地路径注册为 marketplace，或运行 sh install.sh。",
-      copyHttps: "复制 HTTPS 克隆地址",
-      copyOneLiner: "复制一行命令",
-    },
     copySkills: {
-      note: "不用 marketplace 时，可将 skill 目录复制到全局 Claude skills 目录。",
+      note:
+        "高级：不走 plugin marketplace 时，可将 skill 目录复制到全局 ~/.claude/skills（无 plugin 元数据与更新机制）。",
       copyCmd: "复制命令",
     },
   },

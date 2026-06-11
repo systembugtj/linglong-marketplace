@@ -33,7 +33,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Validate marketplace
-        run: pnpm validate
+        run: pnpm skills
 
       - name: Build site
         env:

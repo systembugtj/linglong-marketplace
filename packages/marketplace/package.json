@@ -12,7 +12,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "validate": "pnpm exec ll-skills",
+    "validate": "pnpm --filter @linglongjs/skill-validator run skills",
     "export-catalog": "pnpm run build && node dist/cli/catalog/main.js",
     "test": "vitest run",
     "check": "pnpm run build && pnpm validate && pnpm test"

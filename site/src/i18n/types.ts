@@ -41,54 +41,37 @@ export type Messages = {
     title: string;
     highlight: string;
     highlightSuffix: string;
+    highlightEnd: string;
     fastest: string;
     pluginHint: string;
     catalogNote: string;
     catalogNoteSuffix: string;
-    highlightEnd: string;
     machineReadable: string;
   };
   install: {
     title: string;
     tabs: {
       quick: string;
-      ghPages: string;
-      marketplace: string;
-      clone: string;
+      plugin: string;
       copySkills: string;
     };
     quick: {
       note: string;
-      source: string;
-      oneLiner: string;
+      curlHead: string;
       copyCurl: string;
       viewScript: string;
-      localRun: string;
+      cloneHead: string;
+      cloneNote: string;
+      cliHead: string;
       copyCli: string;
-      copyPagesCurl: string;
     };
-    ghPages: {
-      note: string;
-      stepOpen: string;
-      stepGit: string;
-      stepIndex: string;
-      stepRegister: string;
-      copyClaude: string;
-      copyLinks: string;
-      manifest: string;
-    };
-    marketplace: {
+    plugin: {
       note: string;
       gitSource: string;
-      manifest: string;
-      pluginsDir: string;
-      copyPlugin: string;
+      stepAdd: string;
+      stepInstall: string;
+      copySlash: string;
       docs: string;
-    };
-    clone: {
-      note: string;
-      copyHttps: string;
-      copyOneLiner: string;
     };
     copySkills: {
       note: string;
