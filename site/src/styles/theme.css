@@ -1,50 +1,83 @@
 /*
  * 玲珑 Linglong — 青瓷玉光
- * 玲珑剔透：清透、精巧、温润，非沉郁暗色。
- * 灵感：白玉、青瓷釉、晨光透玉。
+ *
+ * 玲珑剔透：清透、精巧、温润。
+ * 视觉语义：白玉（surface）· 青瓷釉（celadon）· 赤金（gilt trim）· 墨绿（ink）
+ * 所有正文/链接/按钮对比度 ≥ WCAG AA 4.5:1
  */
 :root {
-  /* Surfaces */
-  --bg-deep: #edf5f1;
-  --bg-panel: #ffffff;
-  --bg-elevated: #f6fbf8;
-  --bg-code: #e3f0ea;
+  color-scheme: light;
 
-  /* Ink & glaze */
-  --border: #b8d4c8;
-  --border-soft: rgba(42, 168, 130, 0.35);
-  --text: #1a3229;
-  --text-muted: #4a6b60;
+  /* ── 玉境 surfaces ── */
+  --jade-mist: #e8f2ed;
+  --jade-white: #f7fbf9;
+  --jade-panel: #fcfefd;
+  --jade-elevated: #f2f8f5;
+  --jade-code: #e0ece7;
 
-  /* 翠玉 — primary jade */
-  --accent: #1f9d7a;
-  --accent-bright: #2ec49a;
-  --accent-dim: #157a5f;
-  --accent-glow: rgba(46, 196, 154, 0.22);
-  --glow-jade: rgba(46, 196, 154, 0.18);
-  --glow-jade-soft: rgba(46, 196, 154, 0.1);
-  --hover-jade: rgba(31, 157, 122, 0.14);
+  /* ── 墨绿 ink ── */
+  --ink: #1c3330;
+  --ink-muted: #3d5c55;
 
-  /* 赤金 — ornament */
-  --amber: #b8862e;
-  --amber-dim: #946b22;
-  --glow-gold: rgba(184, 134, 46, 0.14);
-  --glow-gold-soft: rgba(184, 134, 46, 0.08);
+  /* ── 青瓷釉 celadon ── */
+  --celadon: #428070;
+  --celadon-deep: #3a7264;
+  --celadon-bright: #5fa897;
+  --celadon-glaze: rgba(66, 128, 112, 0.14);
+  --celadon-glow: rgba(95, 168, 151, 0.22);
+  --celadon-soft: rgba(66, 128, 112, 0.07);
+  --celadon-hover: rgba(66, 128, 112, 0.11);
+  --celadon-pressed: #2f5f53;
 
-  /* Accents */
-  --cinnabar: #c94f42;
-  --danger: #c94444;
-  --code-fg: #0d4f3c;
+  /* ── 赤金 gilt ornament ── */
+  --gilt: #8b6914;
+  --gilt-bright: #9a7234;
+  --gilt-soft: rgba(139, 105, 20, 0.09);
+
+  /* ── 朱 seal accent ── */
+  --cinnabar: #b54a42;
+  --danger: #c0392b;
+
+  /* ── 釉裂 border ── */
+  --border-glaze: #b5d4c9;
+  --border-soft: rgba(66, 128, 112, 0.3);
+
+  /* ── 语义 aliases（组件层沿用） ── */
+  --text: var(--ink);
+  --text-muted: var(--ink-muted);
   --text-on-accent: #ffffff;
+  --code-fg: #2a5248;
+  --accent: var(--celadon);
+  --accent-dim: var(--celadon-deep);
+  --accent-bright: var(--celadon-bright);
+  --accent-glow: var(--celadon-glaze);
+  --amber: var(--gilt);
+  --amber-dim: var(--gilt-bright);
+  --bg-deep: var(--jade-mist);
+  --bg-panel: var(--jade-panel);
+  --bg-elevated: var(--jade-elevated);
+  --bg-code: var(--jade-code);
+  --border: var(--border-glaze);
+  --hover-jade: var(--celadon-hover);
+  --glow-jade: var(--celadon-glow);
+  --glow-jade-soft: var(--celadon-soft);
+  --glow-gold: var(--gilt-soft);
+  --glow-gold-soft: rgba(139, 105, 20, 0.04);
 
-  /* Chrome */
-  --radius: 10px;
+  /* ── focus & chrome ── */
+  --focus-ring: var(--celadon-deep);
+  --focus-offset: 2px;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --font-serif: "Noto Serif SC", "Songti SC", "STSong", serif;
   --font-sans: "Plus Jakarta Sans", "Noto Sans SC", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
-  --rail-width: 220px;
-  --shadow-panel: 0 10px 36px rgba(26, 50, 41, 0.07);
-  --shadow-rail: 4px 0 28px rgba(26, 50, 41, 0.1);
-  --btn-primary-shadow: 0 4px 18px rgba(31, 157, 122, 0.32);
-  --header-tint: rgba(255, 255, 255, 0.72);
-  --footer-tint: rgba(237, 245, 241, 0.95);
+  --rail-width: 228px;
+  --shadow-jade: 0 14px 44px rgba(28, 51, 48, 0.09);
+  --shadow-panel: 0 8px 32px rgba(28, 51, 48, 0.06);
+  --shadow-rail: 6px 0 32px rgba(28, 51, 48, 0.1);
+  --btn-primary-shadow: 0 4px 20px rgba(58, 114, 100, 0.32);
+  --glass-blur: 14px;
+  --header-tint: rgba(252, 254, 253, 0.9);
+  --footer-tint: rgba(232, 242, 237, 0.96);
 }
