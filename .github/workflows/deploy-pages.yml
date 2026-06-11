@@ -1,5 +1,5 @@
-# Build static site and deploy to GitHub Pages via official Actions integration.
-# After first push: Settings → Pages → Source: GitHub Actions (not a branch).
+# Build site/dist with pnpm + turbo and deploy to GitHub Pages.
+# Settings → Pages → Source: GitHub Actions (once per repo).
 name: Deploy GitHub Pages
 
 on:
@@ -22,33 +22,32 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - uses: pnpm/action-setup@v4
         with:
-          python-version: "3.12"
+          version: 9
 
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-          cache: "npm"
-          cache-dependency-path: site/web/package-lock.json
+          cache: "pnpm"
 
-      - name: Install Python deps
-        run: pip install "PyYAML>=6.0.1"
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
-      - name: Install site (Vite + React) deps
-        run: npm ci --prefix site/web
+      - name: Validate marketplace
+        run: pnpm validate
 
       - name: Build site
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_REF_NAME: ${{ github.ref_name }}
-        run: python3 scripts/build_site.py --out _site
+        run: pnpm build --filter @linglongjs/site
 
       - uses: actions/configure-pages@v5
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
+          path: site/dist
 
   deploy:
     needs: build

@@ -1,0 +1,10 @@
+{
+  "name": "rfc-plugin",
+  "version": "1.0.0",
+  "description": "RFC proposals, roadmap alignment, task tracking, and approval-gated implementation workflow",
+  "author": {
+    "name": "Linglong"
+  },
+  "license": "MIT",
+  "keywords": ["rfc", "roadmap", "workflow", "specs", "planning"]
+}

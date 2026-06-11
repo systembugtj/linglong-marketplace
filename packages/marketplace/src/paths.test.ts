@@ -1,0 +1,29 @@
+import path from "node:path";
+import { describe, expect, it } from "vitest";
+
+import { discoverPluginRoots, discoverSkillDirs, pluginsRoot } from "./paths.js";
+import { repoRoot } from "./repoRoot.js";
+
+describe("plugin layout", () => {
+  const base = repoRoot();
+  const pluginsDir = pluginsRoot(base);
+
+  it("discovers three plugin packages", () => {
+    const roots = discoverPluginRoots(pluginsDir);
+    const names = roots.map((p) => path.basename(p)).sort();
+    expect(names).toEqual([
+      "macos-swiftpm-plugin",
+      "rfc-plugin",
+      "tauri-plugin",
+    ]);
+  });
+
+  it("finds five skills total", () => {
+    const roots = discoverPluginRoots(pluginsDir);
+    const total = roots.reduce(
+      (n, r) => n + discoverSkillDirs(r).length,
+      0,
+    );
+    expect(total).toBe(5);
+  });
+});

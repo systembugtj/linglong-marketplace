@@ -1,0 +1,27 @@
+{
+  "name": "@linglongjs/site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "export-catalog": "pnpm --filter @linglongjs/marketplace run export-catalog",
+    "dev": "pnpm run export-catalog && vite",
+    "build": "pnpm run export-catalog && vite build",
+    "preview": "vite preview",
+    "validate": "pnpm --filter @linglongjs/marketplace run validate",
+    "test": "vitest run",
+    "check": "pnpm run validate && pnpm run test"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.12",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "jsdom": "^25.0.1",
+    "typescript": "~5.7.3",
+    "vite": "^6.0.11",
+    "vitest": "^2.1.9"
+  }
+}

@@ -1,17 +1,17 @@
 {
   "name": "linglong-marketplace",
   "private": true,
-  "description": "Claude Code skill marketplace (plugins + validation)",
+  "packageManager": "pnpm@9.15.9",
   "scripts": {
-    "validate": "python3 -m scripts.validate_marketplace",
-    "test": "python3 -m unittest discover -s tests -p 'test_*.py' -v",
-    "test:site": "npm run test --prefix site/web",
-    "build:site": "python3 scripts/build_site.py --out _site",
-    "deploy:pages": "bash scripts/deploy-gh-pages.sh",
-    "check": "npm run validate && npm test && npm run test:site",
+    "build": "turbo run build",
+    "validate": "turbo run validate",
+    "test": "turbo run test",
+    "check": "turbo run check",
+    "dev": "pnpm --filter @linglongjs/site dev",
     "prepare": "husky"
   },
   "devDependencies": {
-    "husky": "^9.1.7"
+    "husky": "^9.1.7",
+    "turbo": "^2.5.4"
   }
 }

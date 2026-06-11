@@ -1,0 +1,10 @@
+{
+  "name": "macos-swiftpm-plugin",
+  "version": "1.0.0",
+  "description": "SwiftPM macOS shell-assembled .app packaging, codesign, and deploy to /Applications",
+  "author": {
+    "name": "Linglong"
+  },
+  "license": "MIT",
+  "keywords": ["macos", "swiftpm", "swiftui", "packaging", "deploy"]
+}
