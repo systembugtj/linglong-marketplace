@@ -16,3 +16,11 @@ export const PLUGIN_MANIFEST_NAME = "plugin.json";
 export const MARKETPLACE_MANIFEST_REL = ".claude-plugin/marketplace.json";
 export const DEFAULT_BRANCH = "main";
 export const GITHUB_HOST = "github.com";
+
+/** Canonical GitHub slug for this marketplace (Pages + install URLs). */
+export const CANONICAL_GITHUB_REPOSITORY = "systembugtj/linglong-marketplace";
+
+/** Former owners — never emit these in catalog or install scripts. */
+export const DEPRECATED_GITHUB_REPOSITORIES = new Set([
+  "luban-ws/linglong-marketplace",
+]);

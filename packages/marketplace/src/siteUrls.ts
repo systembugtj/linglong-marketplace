@@ -1,6 +1,11 @@
 import { execSync } from "node:child_process";
 
-import { DEFAULT_BRANCH, GITHUB_HOST } from "@linglongjs/skill-validator";
+import {
+  CANONICAL_GITHUB_REPOSITORY,
+  DEFAULT_BRANCH,
+  DEPRECATED_GITHUB_REPOSITORIES,
+  GITHUB_HOST,
+} from "@linglongjs/skill-validator";
 
 const GITHUB_PAGES_SUFFIX = ".github.io";
 
@@ -34,14 +39,24 @@ export function readGitOriginSlug(repoRoot: string): string | null {
   }
 }
 
+/** Map retired forks to the canonical marketplace repo. */
+export function normalizeRepositorySlug(slug: string): string {
+  const trimmed = slug.trim();
+  if (!trimmed) return CANONICAL_GITHUB_REPOSITORY;
+  if (DEPRECATED_GITHUB_REPOSITORIES.has(trimmed)) {
+    return CANONICAL_GITHUB_REPOSITORY;
+  }
+  return trimmed;
+}
+
 export function resolveRepositorySlug(repoRoot: string): string {
-  const envSlug = process.env.GITHUB_REPOSITORY?.trim();
-  if (envSlug) return envSlug;
+  const envSlug =
+    process.env.LINGLONG_GITHUB_REPOSITORY?.trim() ||
+    process.env.GITHUB_REPOSITORY?.trim();
+  if (envSlug) return normalizeRepositorySlug(envSlug);
   const origin = readGitOriginSlug(repoRoot);
-  if (origin) return origin;
-  throw new Error(
-    "cannot determine owner/repo: set GITHUB_REPOSITORY or configure a GitHub origin remote",
-  );
+  if (origin) return normalizeRepositorySlug(origin);
+  return CANONICAL_GITHUB_REPOSITORY;
 }
 
 export function resolveSourceBranch(repoRoot: string): string {

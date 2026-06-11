@@ -1,4 +1,6 @@
 import { useCallback, useState, type KeyboardEvent } from "react";
+import { useLocale } from "../i18n/LocaleContext";
+import { LOCALE_ZH } from "../i18n/types";
 import { CLAUDE_PLUGINS_DOCS_URL } from "../lib/constants";
 import {
   buildClaudeInstallCommands,
@@ -38,6 +40,7 @@ function tabIdRole(
 }
 
 export function InstallTabs({ catalog, onCopy }: Props) {
+  const { locale, messages: t } = useLocale();
   const [active, setActive] = useState<TabId>(TAB_QUICK);
 
   const select = useCallback((id: TabId) => {
@@ -73,6 +76,7 @@ export function InstallTabs({ catalog, onCopy }: Props) {
   const browseLines = buildGhPagesBrowseLines(catalog).join("\n");
   const cloneBlock = `git clone ${catalog.cloneUrl}\ncd ${catalog.repoName}`;
   const cloneOneLiner = `git clone ${catalog.cloneUrl} && cd ${catalog.repoName}`;
+  const pluginList = catalog.plugins.map((p) => p.name).join(t.listSep);
 
   const q = tabIdRole(TAB_QUICK, active);
   const gp = tabIdRole(TAB_GH_PAGES, active);
@@ -82,7 +86,7 @@ export function InstallTabs({ catalog, onCopy }: Props) {
 
   return (
     <div className="install-tabs">
-      <ul className="tablist" role="tablist" aria-label="安装方式">
+      <ul className="tablist" role="tablist" aria-label={t.installTabsAria}>
         <li role="presentation">
           <button
             type="button"
@@ -94,7 +98,7 @@ export function InstallTabs({ catalog, onCopy }: Props) {
             onClick={() => select(TAB_QUICK)}
             onKeyDown={(e) => onKeyDown(e, tabs, 0)}
           >
-            快速安装
+            {t.install.tabs.quick}
           </button>
         </li>
         <li role="presentation">
@@ -108,7 +112,7 @@ export function InstallTabs({ catalog, onCopy }: Props) {
             onClick={() => select(TAB_GH_PAGES)}
             onKeyDown={(e) => onKeyDown(e, tabs, 1)}
           >
-            GitHub Pages
+            {t.install.tabs.ghPages}
           </button>
         </li>
         <li role="presentation">
@@ -122,7 +126,7 @@ export function InstallTabs({ catalog, onCopy }: Props) {
             onClick={() => select(TAB_MARKETPLACE)}
             onKeyDown={(e) => onKeyDown(e, tabs, 2)}
           >
-            Claude Code
+            {t.install.tabs.marketplace}
           </button>
         </li>
         <li role="presentation">
@@ -136,7 +140,7 @@ export function InstallTabs({ catalog, onCopy }: Props) {
             onClick={() => select(TAB_CLONE)}
             onKeyDown={(e) => onKeyDown(e, tabs, 3)}
           >
-            Clone
+            {t.install.tabs.clone}
           </button>
         </li>
         <li role="presentation">
@@ -150,7 +154,7 @@ export function InstallTabs({ catalog, onCopy }: Props) {
             onClick={() => select(TAB_COPY)}
             onKeyDown={(e) => onKeyDown(e, tabs, 4)}
           >
-            ~/.claude/skills
+            {t.install.tabs.copySkills}
           </button>
         </li>
       </ul>
@@ -162,7 +166,7 @@ export function InstallTabs({ catalog, onCopy }: Props) {
         hidden={active !== TAB_QUICK}
       >
         <p className="note">
-          在 macOS / Linux 终端运行（需已安装{" "}
+          {t.install.quick.note.replace("{name}", catalog.marketplaceName)}{" "}
           <a
             href="https://code.claude.com/docs/en/cli"
             target="_blank"
@@ -170,14 +174,12 @@ export function InstallTabs({ catalog, onCopy }: Props) {
           >
             Claude Code CLI
           </a>
-          ）。脚本会注册 <code>{catalog.marketplaceName}</code> 并安装全部
-          plugin。
         </p>
         <p className="note tight">
-          源码仓库：{" "}
+          {t.install.quick.source}{" "}
           <a href={catalog.repositoryUrl}>{catalog.repositoryUrl}</a>
         </p>
-        <h3 className="subhead">一行命令（推荐）</h3>
+        <h3 className="subhead">{t.install.quick.oneLiner}</h3>
         <pre className="code-block">{curlCmd}</pre>
         <div className="copy-row">
           <button
@@ -185,7 +187,7 @@ export function InstallTabs({ catalog, onCopy }: Props) {
             className="btn btn-primary"
             onClick={() => onCopy(curlCmd)}
           >
-            复制 curl 安装
+            {t.install.quick.copyCurl}
           </button>
           <a
             className="btn btn-ghost"
@@ -193,25 +195,21 @@ export function InstallTabs({ catalog, onCopy }: Props) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            查看 install.sh
+            {t.install.quick.viewScript}
           </a>
         </div>
-        <h3 className="subhead">克隆后本地运行</h3>
+        <h3 className="subhead">{t.install.quick.localRun}</h3>
         <pre className="code-block">{`git clone ${catalog.cloneUrl}\ncd ${catalog.repoName}\nsh install.sh`}</pre>
         <div className="copy-row">
-          <button
-            type="button"
-            className="btn"
-            onClick={() => onCopy(cliCmd)}
-          >
-            复制 CLI 命令
+          <button type="button" className="btn" onClick={() => onCopy(cliCmd)}>
+            {t.install.quick.copyCli}
           </button>
           <button
             type="button"
             className="btn"
             onClick={() => onCopy(curlPagesCmd)}
           >
-            复制 Pages 版 curl
+            {t.install.quick.copyPagesCurl}
           </button>
         </div>
       </div>
@@ -222,49 +220,35 @@ export function InstallTabs({ catalog, onCopy }: Props) {
         className={`tabpanel${active === TAB_GH_PAGES ? " is-active" : ""}`}
         hidden={active !== TAB_GH_PAGES}
       >
-        <p className="note">
-          <strong>linglong-marketplace</strong> 通过 GitHub Actions 部署到 GitHub
-          Pages：推送 <code>{catalog.sourceBranch}</code> 后自动构建本目录站。
-          在此<strong>浏览</strong> skill 列表；在 Claude Code 里用<strong> Git
-          仓库</strong>注册 marketplace（不是 Pages URL）。
-        </p>
+        <p className="note">{t.install.ghPages.note}</p>
         <ol className="install-steps">
           <li>
-            打开 Pages 站点：{" "}
+            {t.install.ghPages.stepOpen}{" "}
             <a href={catalog.pagesUrl}>{catalog.pagesUrl}</a>
           </li>
           <li>
-            Git 仓库：{" "}
+            {t.install.ghPages.stepGit}{" "}
             <a href={catalog.repositoryUrl}>{catalog.repositoryUrl}</a>
           </li>
           <li>
-            机器可读索引：{" "}
-            <a href={catalog.pagesCatalogUrl}>catalog.json</a>、{" "}
+            {t.install.ghPages.stepIndex}{" "}
+            <a href={catalog.pagesCatalogUrl}>catalog.json</a>
+            {t.listSep}
             <a href={catalog.pagesManifestUrl}>manifest.json</a>
           </li>
-          <li>
-            在 Claude Code 注册 marketplace（git 源）并安装 plugin：
-          </li>
+          <li>{t.install.ghPages.stepRegister}</li>
         </ol>
         <pre className="code-block">{installCmd}</pre>
         <div className="copy-row">
-          <button
-            type="button"
-            className="btn"
-            onClick={() => onCopy(installCmd)}
-          >
-            复制 Claude 安装命令
+          <button type="button" className="btn" onClick={() => onCopy(installCmd)}>
+            {t.install.ghPages.copyClaude}
           </button>
-          <button
-            type="button"
-            className="btn"
-            onClick={() => onCopy(browseLines)}
-          >
-            复制 Pages 链接
+          <button type="button" className="btn" onClick={() => onCopy(browseLines)}>
+            {t.install.ghPages.copyLinks}
           </button>
         </div>
         <p className="note note-spaced">
-          Marketplace manifest（git raw）：{" "}
+          {t.install.ghPages.manifest}{" "}
           <a href={catalog.marketplaceManifestRawUrl}>
             <code>.claude-plugin/marketplace.json</code>
           </a>
@@ -278,33 +262,31 @@ export function InstallTabs({ catalog, onCopy }: Props) {
         hidden={active !== TAB_MARKETPLACE}
       >
         <p className="note">
-          将仓库添加为 marketplace <code>{catalog.marketplaceName}</code>
-          ，再按需安装 plugin（
-          {catalog.plugins.map((p) => p.name).join("、")}）。
+          {t.install.marketplace.note}{" "}
+          <code>{catalog.marketplaceName}</code>
+          {locale === LOCALE_ZH ? `（${pluginList}）。` : ` (${pluginList}).`}
         </p>
         <ul className="install-bullets">
           <li>
-            Git 源：<code>{catalog.cloneUrl}</code>
+            {t.install.marketplace.gitSource}{" "}
+            <code>{catalog.cloneUrl}</code>
           </li>
           <li>
-            Manifest：<code>.claude-plugin/marketplace.json</code>
+            {t.install.marketplace.manifest}{" "}
+            <code>.claude-plugin/marketplace.json</code>
           </li>
           <li>
-            Plugin 包位于 <code>plugins/</code>
+            {t.install.marketplace.pluginsDir} <code>plugins/</code>
           </li>
         </ul>
         <pre className="code-block">{installCmd}</pre>
         <div className="copy-row">
-          <button
-            type="button"
-            className="btn"
-            onClick={() => onCopy(installCmd)}
-          >
-            复制 /plugin 命令
+          <button type="button" className="btn" onClick={() => onCopy(installCmd)}>
+            {t.install.marketplace.copyPlugin}
           </button>
         </div>
         <p className="note note-spaced">
-          文档：{" "}
+          {t.install.marketplace.docs}{" "}
           <a href={CLAUDE_PLUGINS_DOCS_URL}>Claude Code plugins</a>
         </p>
       </div>
@@ -315,10 +297,7 @@ export function InstallTabs({ catalog, onCopy }: Props) {
         className={`tabpanel${active === TAB_CLONE ? " is-active" : ""}`}
         hidden={active !== TAB_CLONE}
       >
-        <p className="note">
-          克隆仓库后，可将本地路径注册为 marketplace，或运行{" "}
-          <code>sh install.sh</code>。
-        </p>
+        <p className="note">{t.install.clone.note}</p>
         <pre className="code-block">{cloneBlock}</pre>
         <div className="copy-row">
           <button
@@ -326,14 +305,10 @@ export function InstallTabs({ catalog, onCopy }: Props) {
             className="btn"
             onClick={() => onCopy(catalog.cloneUrl)}
           >
-            复制 HTTPS 克隆地址
+            {t.install.clone.copyHttps}
           </button>
-          <button
-            type="button"
-            className="btn"
-            onClick={() => onCopy(cloneOneLiner)}
-          >
-            复制一行命令
+          <button type="button" className="btn" onClick={() => onCopy(cloneOneLiner)}>
+            {t.install.clone.copyOneLiner}
           </button>
         </div>
       </div>
@@ -344,9 +319,7 @@ export function InstallTabs({ catalog, onCopy }: Props) {
         className={`tabpanel${active === TAB_COPY ? " is-active" : ""}`}
         hidden={active !== TAB_COPY}
       >
-        <p className="note">
-          不用 marketplace 时，可将 skill 目录复制到全局 Claude skills 目录。
-        </p>
+        <p className="note">{t.install.copySkills.note}</p>
         {catalog.skills.map((s: Skill) => (
           <div key={s.folder} className="panel copy-panel">
             <h3>
@@ -360,7 +333,7 @@ export function InstallTabs({ catalog, onCopy }: Props) {
                 className="btn"
                 onClick={() => onCopy(s.copyCommand)}
               >
-                复制命令
+                {t.install.copySkills.copyCmd}
               </button>
             </div>
           </div>

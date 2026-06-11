@@ -1,0 +1,24 @@
+/* Linglong 玲珑 — jade, lacquer, amber */
+:root {
+  --bg-deep: #070b0f;
+  --bg-panel: #0e1419;
+  --bg-elevated: #151d24;
+  --border: #24333c;
+  --border-soft: rgba(82, 201, 168, 0.18);
+  --text: #eef5f3;
+  --text-muted: #8fa8a3;
+  --accent: #52c9a8;
+  --accent-bright: #6fe0be;
+  --accent-dim: #2a8f74;
+  --accent-glow: rgba(82, 201, 168, 0.14);
+  --amber: #e8c468;
+  --amber-dim: #c9a24e;
+  --cinnabar: #e07a5f;
+  --danger: #d45757;
+  --code-fg: #b8ead9;
+  --radius: 10px;
+  --font-sans: "Plus Jakarta Sans", "Noto Sans SC", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --rail-width: 220px;
+  --shadow-panel: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
