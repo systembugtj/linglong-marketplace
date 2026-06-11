@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 import {
+  MARKETPLACE_MANIFEST_REL,
   PLUGIN_MANIFEST_DIR,
   PLUGIN_MANIFEST_NAME,
   PLUGIN_NAME_PATTERN,
@@ -137,7 +138,7 @@ export function collectMarketplaceErrors(
 }
 
 export function validateMarketplaceAt(base: string): string[] {
-  const mpPath = path.join(base, ".claude-plugin", "marketplace.json");
+  const mpPath = path.join(base, MARKETPLACE_MANIFEST_REL);
   if (!fs.existsSync(mpPath)) {
     return [`missing marketplace manifest: ${mpPath}`];
   }

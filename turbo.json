@@ -5,7 +5,13 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
     },
-    "validate": {},
+    "export-catalog": {
+      "dependsOn": ["^build"],
+      "outputs": ["../../site/public/catalog.json", "../../site/public/manifest.json"]
+    },
+    "validate": {
+      "dependsOn": ["^build"]
+    },
     "test": {},
     "check": {
       "dependsOn": ["validate", "test"]

@@ -2,10 +2,10 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 
 import { discoverPluginRoots, discoverSkillDirs, pluginsRoot } from "./paths.js";
-import { repoRoot } from "./repoRoot.js";
+import { linglongMarketplaceRoot } from "./testFixtures.js";
 
 describe("plugin layout", () => {
-  const base = repoRoot();
+  const base = linglongMarketplaceRoot();
   const pluginsDir = pluginsRoot(base);
 
   it("discovers three plugin packages", () => {

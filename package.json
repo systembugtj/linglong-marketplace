@@ -7,6 +7,8 @@
     "validate": "turbo run validate",
     "test": "turbo run test",
     "check": "turbo run check",
+    "skills": "pnpm --filter @linglongjs/skill-validator run skills",
+    "catalog": "pnpm --filter @linglongjs/marketplace-build run export-catalog",
     "dev": "pnpm --filter @linglongjs/site dev",
     "prepare": "husky"
   },

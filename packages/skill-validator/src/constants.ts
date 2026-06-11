@@ -13,5 +13,6 @@ export const ALLOWED_FRONTMATTER_KEYS = new Set([
 export const PLUGINS_ROOT_REL = "plugins";
 export const PLUGIN_MANIFEST_DIR = ".claude-plugin";
 export const PLUGIN_MANIFEST_NAME = "plugin.json";
+export const MARKETPLACE_MANIFEST_REL = ".claude-plugin/marketplace.json";
 export const DEFAULT_BRANCH = "main";
 export const GITHUB_HOST = "github.com";

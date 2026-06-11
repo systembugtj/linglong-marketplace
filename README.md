@@ -8,31 +8,27 @@ Standard **Claude Code plugin marketplace** (`linglong-marketplace`) with domain
 | `rfc-plugin` | `rfc-management`, `rfc-workflow` |
 | `macos-swiftpm-plugin` | `macos-swiftpm-cli-app`, `macos-swiftpm-app-deployer` |
 
-**pnpm + Turbo monorepo** — no Python for build/validate.
+**pnpm + Turbo monorepo** — `packages/` holds **@linglongjs build tools**; `plugins/` holds marketplace content.
 
-| Package | Role |
-|---------|------|
-| `@linglongjs/marketplace` | TypeScript: validate manifest, export `catalog.json` |
-| `@linglongjs/site` | Vite + React → **`site/dist`** for GitHub Pages |
+| Location | Role |
+|----------|------|
+| [`packages/skill-validator`](packages/skill-validator) | **`ll-skills`** — validate skills (public npm) |
+| [`packages/marketplace`](packages/marketplace) | **`ll-catalog`** — export `catalog.json` for browse sites |
+| [`site`](site) | Vite intro site → GitHub Pages |
+| [`plugins/`](plugins) | Plugin packages + `SKILL.md` files |
+
+See [packages/README.md](packages/README.md) for the toolchain overview.
 
 ## Browse & install
 
-**Site (self-contained intro):** [Browse on GitHub Pages](https://systembugtj.github.io/linglong-marketplace/)
+**Site:** [GitHub Pages](https://systembugtj.github.io/linglong-marketplace/)
 
 **Source:** [github.com/systembugtj/linglong-marketplace](https://github.com/systembugtj/linglong-marketplace)
 
-**Quick install** (macOS / Linux, requires [Claude Code CLI](https://code.claude.com/docs/en/cli)):
+**Quick install** (macOS / Linux, [Claude Code CLI](https://code.claude.com/docs/en/cli)):
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/systembugtj/linglong-marketplace/main/install.sh | sh
-```
-
-Or after clone:
-
-```bash
-git clone https://github.com/systembugtj/linglong-marketplace.git
-cd linglong-marketplace
-sh install.sh
 ```
 
 **In Claude Code** (Git HTTPS, not Pages URL):
@@ -44,35 +40,42 @@ sh install.sh
 /plugin install macos-swiftpm-plugin@linglong-marketplace
 ```
 
-## GitHub Pages
+## Build tools (from repo root)
 
-Push to `main` → [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml) runs `pnpm build --filter @linglongjs/site` and publishes **`site/dist`**.
+```bash
+pnpm skills      # ll-skills — validate marketplace + SKILL.md
+pnpm catalog     # ll-catalog — write site/public/catalog.json
+pnpm check       # all packages: validate + test
+pnpm dev         # catalog + Vite dev server
+pnpm build       # production site → site/dist
+```
+
+Any marketplace repo (npm):
+
+```bash
+npx @linglongjs/skill-validator    # ll-skills
+ll-skills --help
+```
 
 ## Layout
 
 ```
 .claude-plugin/marketplace.json
-install.sh                # curl | sh installer (copied to site on build)
-packages/marketplace/       # TS validate + catalog export
-site/                       # Vite app → dist/
-plugins/
-  tauri-plugin/.claude-plugin/plugin.json + skills/…
-  rfc-plugin/…
-  macos-swiftpm-plugin/…
+.spec/ROADMAP.md            # RFC index + phases
+.spec/TASK_TRACKING.md      # tasks
+.spec/rfc/                  # RFC bodies only
+install.sh
+packages/                   # @linglongjs CLIs + libraries
+  skill-validator/          # ll-skills
+  marketplace/              # ll-catalog (@linglongjs/marketplace-build)
+site/                       # GitHub Pages app
+plugins/                    # marketplace content
 ```
 
-## Development
+**Specs:** [ROADMAP](.spec/ROADMAP.md) · [TASK_TRACKING](.spec/TASK_TRACKING.md)
 
-```bash
-corepack enable
-pnpm install
-pnpm dev          # export catalog + Vite dev server
-pnpm check        # turbo: validate + test (all packages)
-pnpm build        # site → site/dist
-```
+## GitHub Pages
 
-Catalog URLs resolve from `git remote origin` locally; CI sets `GITHUB_REPOSITORY` / `GITHUB_REF_NAME`.
-
-## Settings
+Push to `main` → [deploy workflow](.github/workflows/deploy-pages.yml) runs `pnpm build --filter @linglongjs/site`.
 
 **Settings → Pages → Source:** GitHub Actions (once per repo).

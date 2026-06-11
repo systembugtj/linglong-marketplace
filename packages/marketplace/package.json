@@ -1,24 +1,36 @@
 {
-  "name": "@linglongjs/marketplace",
+  "name": "@linglongjs/marketplace-build",
   "version": "1.0.0",
+  "description": "CLI and APIs to build Claude Code marketplace catalogs (catalog.json, manifest.json)",
   "private": true,
   "type": "module",
   "exports": {
     ".": "./src/index.ts"
   },
+  "bin": {
+    "ll-catalog": "./dist/cli/catalog/main.js"
+  },
   "scripts": {
-    "validate": "tsx src/cli/validate.ts",
-    "export-catalog": "tsx src/cli/export-catalog.ts",
+    "build": "tsc -p tsconfig.build.json",
+    "validate": "pnpm exec ll-skills",
+    "export-catalog": "pnpm run build && node dist/cli/catalog/main.js",
     "test": "vitest run",
-    "check": "pnpm validate && pnpm test"
+    "check": "pnpm run build && pnpm validate && pnpm test"
   },
   "dependencies": {
-    "yaml": "^2.8.0"
+    "@linglongjs/skill-validator": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^22.13.10",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2",
     "vitest": "^2.1.9"
-  }
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "marketplace",
+    "catalog",
+    "skills"
+  ]
 }

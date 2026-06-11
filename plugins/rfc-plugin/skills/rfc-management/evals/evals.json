@@ -3,20 +3,20 @@
   "evals": [
     {
       "id": 1,
-      "prompt": "RFC 0012 is approved and merged. Our repo uses docs/rfc/ and ROADMAP.md plus TASK_TRACKING.md. What should change in the tree and tracking files?",
-      "expected_output": "Archive/move completed RFC per repo policy; update roadmap and tracker; clear stale In Progress; no contradictory status across files.",
+      "prompt": "RFC 0012 is approved and merged. Repo uses .spec/ROADMAP.md and .spec/TASK_TRACKING.md. What files do you touch?",
+      "expected_output": "Move RFC to rfc/completed/; ROADMAP status Implemented; TASK_TRACKING items checked done; no README indexes; same change set.",
       "files": []
     },
     {
       "id": 2,
-      "prompt": "I want to propose a notification bridge. No CONTRIBUTING file—only a docs/rfc/README that says 0001 started the numbering. What do you do first?",
-      "expected_output": "Read docs/rfc/README; pick next id; follow required sections; register in roadmap/tracker if the project uses them; avoid inventing policy without user confirmation.",
+      "prompt": "linglong-marketplace: propose RFC 0004 for a notification bridge. Only ROADMAP and TASK_TRACKING under .spec/.",
+      "expected_output": "ROADMAP index row Draft; create .spec/rfc/0004-….md with spec sections only; TASK_TRACKING tasks with RFC 0004; no .spec/README or rfc/README; no tasks inside RFC body.",
       "files": []
     },
     {
       "id": 3,
-      "prompt": "We use design/ instead of docs/rfc/ and Linear instead of TASK_TRACKING.md. How do you apply this skill?",
-      "expected_output": "Map skill pattern to design/ and Linear; discover numbering and status rules; do not force ROADMAP.md paths if repo uses equivalents.",
+      "prompt": "User wants to implement RFC 0003. Which skill first?",
+      "expected_output": "Confirm Approved in ROADMAP; then rfc-workflow for implementation; after merge rfc-management Playbook C for Implemented and tracker.",
       "files": []
     }
   ]

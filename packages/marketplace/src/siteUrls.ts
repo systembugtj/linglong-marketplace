@@ -1,6 +1,6 @@
 import { execSync } from "node:child_process";
 
-import { DEFAULT_BRANCH, GITHUB_HOST } from "./constants.js";
+import { DEFAULT_BRANCH, GITHUB_HOST } from "@linglongjs/skill-validator";
 
 const GITHUB_PAGES_SUFFIX = ".github.io";
 

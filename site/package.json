@@ -3,11 +3,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "export-catalog": "pnpm --filter @linglongjs/marketplace run export-catalog",
+    "export-catalog": "pnpm --filter @linglongjs/marketplace-build run export-catalog",
     "dev": "pnpm run export-catalog && vite",
     "build": "pnpm run export-catalog && vite build",
     "preview": "vite preview",
-    "validate": "pnpm --filter @linglongjs/marketplace run validate",
+    "validate": "pnpm --filter @linglongjs/marketplace-build run validate",
     "test": "vitest run",
     "check": "pnpm run validate && pnpm run test"
   },

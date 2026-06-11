@@ -1,6 +1,7 @@
 node_modules/
 site/node_modules/
 packages/*/node_modules/
+packages/*/dist/
 site/public/catalog.json
 site/public/manifest.json
 site/public/install.sh

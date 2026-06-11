@@ -1,0 +1,51 @@
+{
+  "name": "@linglongjs/skill-validator",
+  "version": "0.1.0",
+  "description": "CLI and library to validate Claude Code SKILL.md files and marketplace plugin layouts",
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "ll-skills": "./dist/cli/main.js",
+    "linglong-skills": "./dist/cli/main.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "skills": "pnpm run build && node dist/cli/main.js",
+    "validate": "pnpm run build",
+    "test": "vitest run",
+    "check": "pnpm run build && pnpm run test"
+  },
+  "dependencies": {
+    "yaml": "^2.8.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "typescript": "^5.8.2",
+    "vitest": "^2.1.9"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/systembugtj/linglong-marketplace.git",
+    "directory": "packages/skill-validator"
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "skill",
+    "skills",
+    "marketplace",
+    "validator"
+  ]
+}

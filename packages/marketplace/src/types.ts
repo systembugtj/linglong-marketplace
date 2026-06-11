@@ -1,16 +1,9 @@
-export type MarketplacePluginEntry = {
-  name?: string;
-  description?: string;
-  source?: string;
-  strict?: boolean;
-  skills?: string[];
-};
+import type {
+  MarketplaceManifest,
+  MarketplacePluginEntry,
+} from "@linglongjs/skill-validator";
 
-export type MarketplaceManifest = {
-  name?: string;
-  metadata?: { description?: string; version?: string };
-  plugins?: MarketplacePluginEntry[];
-};
+export type { MarketplaceManifest, MarketplacePluginEntry };
 
 export type CatalogSkill = {
   id: string;

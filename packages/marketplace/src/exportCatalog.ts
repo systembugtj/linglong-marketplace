@@ -1,8 +1,12 @@
 import fs from "node:fs";
 import path from "node:path";
 
-import { discoverSkillDirs, resolveRepoPath } from "./paths.js";
-import { parseFrontmatterFile } from "./skillRules.js";
+import {
+  discoverSkillDirs,
+  parseFrontmatterFile,
+  resolveRepoPath,
+} from "@linglongjs/skill-validator";
+import type { MarketplaceManifest, MarketplacePluginEntry } from "./types.js";
 import {
   githubHttpsCloneUrl,
   githubPagesBaseUrl,
@@ -10,11 +14,7 @@ import {
   installScriptRawUrl,
   marketplaceManifestRawUrl,
 } from "./siteUrls.js";
-import type {
-  MarketplaceManifest,
-  MarketplacePluginEntry,
-  SiteCatalog,
-} from "./types.js";
+import type { SiteCatalog } from "./types.js";
 
 function collectSkills(
   base: string,

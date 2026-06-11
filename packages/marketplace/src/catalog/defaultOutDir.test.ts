@@ -1,0 +1,11 @@
+import { describe, expect, it } from "vitest";
+
+import { defaultCatalogOutDir } from "./defaultOutDir.js";
+import { repoRoot } from "../repoRoot.js";
+
+describe("defaultCatalogOutDir", () => {
+  it("uses site/public in this monorepo", () => {
+    const root = repoRoot();
+    expect(defaultCatalogOutDir(root)).toMatch(/site\/public$/);
+  });
+});

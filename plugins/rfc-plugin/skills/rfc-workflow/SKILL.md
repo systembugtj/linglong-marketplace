@@ -1,69 +1,80 @@
 ---
 name: rfc-workflow
-description: Use this skill whenever work ties to RFC-style specs—implementing from a numbered RFC file path, drafting NNN-feature-name.md proposals, phased rollout from a spec, or casual phrases like according to RFC or implement the RFC. Use for review-only passes on technical specs where repository edits must wait for explicit approval. Prefer this over jumping straight to code when requirements live in RFC documents so analysis, numbered plan options, and user-confirmed execution stay ordered. Also use when the user mentions RFC, technical specification document, approval-gated implementation, or wants a new RFC before coding starts.
+description: Implement or review work from an RFC spec—analyze the RFC, present numbered options, get explicit approval, then execute in controlled steps. Use when the user says implement the RFC, according to RFC, or references .spec/rfc/NNNN-slug.md. After code ships, update ROADMAP and TASK_TRACKING per rfc-management. Do not skip approval gates. Pair with rfc-management when creating or archiving RFCs.
 ---
 
 # RFC workflow
 
-RFC-driven work needs explicit human checkpoints: the cost of a wrong assumption is high, and specs often omit edge cases. This skill keeps the sequence **analyze → choose scope → plan → execute** visible so the user can steer before irreversible edits.
+Turn an **approved RFC** into code (or analysis-only review) with explicit human checkpoints: **analyze → choose scope → plan → execute**.
 
-## Core principle
+**File hygiene** (ROADMAP, TASK_TRACKING, archives) is **rfc-management** — use that skill when creating RFCs, changing status, or closing work.
 
-Do not treat silence as approval. RFC-related edits wait for explicit choices (numbered options or clear yes on a stated plan). That reduces surprise and keeps blameless rollback possible.
+## When to use which skill
 
-## Workflow (phases)
+| Step | Skill |
+|------|-------|
+| RFC missing or still Draft | **rfc-management** — Playbook A/B |
+| RFC Approved, user wants implementation | **rfc-workflow** (this skill) |
+| Implementation merged | **rfc-management** — Playbook C (Implemented) |
 
-### Phase 1 — RFC analysis
+## Core rule
 
-When the user references an RFC file or RFC id:
+**Silence is not approval.** Wait for a numbered option (Phase 2) or explicit yes (Phase 3) before substantive repo edits.
+
+## Phase 0 — Locate the spec
+
+1. Resolve RFC path (e.g. `.spec/rfc/0042-feature.md`) or id from **ROADMAP** index.
+2. Read ROADMAP row for status — if not `Approved`, stop and ask or use rfc-management to advance status.
+3. Read RFC body; read **TASK_TRACKING** for related open tasks (do not add tasks inside the RFC).
+
+## Phase 1 — RFC analysis
 
 1. Read the RFC end-to-end.
-2. Extract Summary, Goals, Proposed Solution, Implementation Details, dependencies on other RFCs or modules.
-3. Present structured analysis using the template in [references/workflow-templates.md](references/workflow-templates.md) (Phase 1 block).
+2. Extract: summary, motivation, proposal, implementation notes, dependencies on other RFCs.
+3. Output using the Phase 1 template in [references/workflow-templates.md](references/workflow-templates.md).
+4. List ambiguities as questions — do not guess.
 
-### Phase 2 — implementation planning
+## Phase 2 — Implementation options
 
-After analysis, show implementation options using the Phase 2 template in [references/workflow-templates.md](references/workflow-templates.md). Stop until the user picks an option (1–4).
+Present options from [references/workflow-templates.md](references/workflow-templates.md) Phase 2 block. **Stop** until the user picks 1–4.
 
-### Phase 3 — detailed planning
+## Phase 3 — Detailed plan
 
-For options 1–3 (any path that changes code), produce a file-level plan with the Phase 3 template in [references/workflow-templates.md](references/workflow-templates.md). Stop until the user confirms proceeding (the template ends with yes or no).
+For options 1–3, file-level plan using Phase 3 template. **Stop** until explicit yes/no.
 
-### Phase 4 — controlled execution
+## Phase 4 — Controlled execution
 
-After an explicit yes:
+After yes:
 
-1. Work in one logical unit at a time.
-2. Surface meaningful diffs or edits before applying them so the user can object early.
-3. Track completed steps against the plan for easy rollback discussion.
+1. One logical unit at a time.
+2. Show meaningful diffs before applying when changes are large or risky.
+3. Map each step to TASK_TRACKING items (update tracker via rfc-management rules, not inside RFC files).
+4. On completion: hand off to **rfc-management Playbook C** — ROADMAP `Implemented`, archive RFC, check off tasks.
 
-### Decision menus during execution
+Use Phase 4 decision menu from [references/workflow-templates.md](references/workflow-templates.md) when the user needs to steer mid-flight.
 
-When the user needs to steer mid-flight, reuse the Phase 4 menu in [references/workflow-templates.md](references/workflow-templates.md).
+## RFC body map (what to read)
 
-## RFC document map
+| Section | Use for |
+|---------|---------|
+| Summary | Scope anchor |
+| Motivation | Constraints |
+| Proposal | Architecture / behavior |
+| Implementation notes | Files, packages, CI |
+| Alternatives | Do not re-litigate rejected paths |
 
-| Section | Why it matters |
-|--------|----------------|
-| Summary | Anchor for scope |
-| Context or Problem | Constraints and motivation |
-| Goals | Acceptance lens |
-| Proposed Solution | Architecture choices |
-| Implementation Details | File and module touch points |
-| Alternatives Considered | Rejected paths—avoid re-debate |
-| Risks and Concerns | Test and rollout emphasis |
-| Testing Strategy | Verification expectations |
+Tasks are **not** in the RFC — read **TASK_TRACKING.md**.
 
-## Creating new RFCs
+## Creating a new RFC during workflow
 
-1. Ask clarifying questions until goals and non-goals are crisp.
-2. Mirror structure from an existing RFC in the repo when one exists.
-3. Draft using naming `NNN-feature-name.md` with zero-padded NNN consistent with the repo.
-4. Present the draft for review before writing it to the tree unless the user already asked you to save it.
+If the user wants a spec before coding:
 
-## Safety habits (and why)
+1. Use **rfc-management Playbook A** (ROADMAP + RFC file + TASK_TRACKING).
+2. Present draft for review; advance to **Approved** before Phase 1 implementation work.
+3. Naming: `NNNN-kebab-slug.md` (four-digit id from ROADMAP).
 
-- Show substantive edits before applying them so the user can catch mismatches with the spec.
-- Ask at branch points instead of guessing—RFCs are often ambiguous on ordering and migrations.
-- Keep a short mental changelog of touched files so rollback discussion stays concrete.
-- If interpretation is unclear, pause with questions rather than picking the most convenient reading.
+## Safety habits
+
+- Ask at branch points; RFCs omit ordering and migration detail.
+- Keep a short changelog of touched files for rollback.
+- Unclear spec → questions, not the convenient reading.

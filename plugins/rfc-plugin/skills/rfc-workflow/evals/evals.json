@@ -9,8 +9,8 @@
     },
     {
       "id": 2,
-      "prompt": "We need a new RFC for adding webhook retries. Interview briefly, draft markdown using our NNN-feature-name convention, and do not save until the user approves the draft text.",
-      "expected_output": "Questions, draft RFC structure, explicit review gate before persisting",
+      "prompt": "We need a new RFC for webhook retries in linglong-marketplace (.spec/ROADMAP + TASK_TRACKING). Draft then save after user approves.",
+      "expected_output": "Draft for review; then rfc-management Playbook A—ROADMAP row, .spec/rfc/NNNN-slug.md, TASK_TRACKING tasks; no README indexes.",
       "files": []
     },
     {
