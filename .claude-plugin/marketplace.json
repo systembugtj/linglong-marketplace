@@ -24,7 +24,7 @@
     {
       "name": "rfc-plugin",
       "description": "RFC proposals, roadmap alignment, task tracking, and approval-gated workflow",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "author": {
         "name": "Linglong"
       },

@@ -2,6 +2,8 @@
 
 Use these blocks verbatim when presenting phases to the user so formatting stays consistent.
 
+**linglong-marketplace paths:** `.spec/ROADMAP.md`, `.spec/TASK_TRACKING.md`, `.spec/rfc/NNNN-slug.md`.
+
 ## Phase 1 — RFC analysis output
 
 ```markdown

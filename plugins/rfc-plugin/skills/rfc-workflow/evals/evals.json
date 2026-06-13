@@ -9,8 +9,8 @@
     },
     {
       "id": 2,
-      "prompt": "We need a new RFC for webhook retries in linglong-marketplace (.spec/ROADMAP + TASK_TRACKING). Draft then save after user approves.",
-      "expected_output": "Draft for review; then rfc-management Playbook A—ROADMAP row, .spec/rfc/NNNN-slug.md, TASK_TRACKING tasks; no README indexes.",
+      "prompt": "We need a new RFC for webhook retries in linglong-marketplace (.spec/ROADMAP.md + .spec/TASK_TRACKING.md). Draft then save after user approves.",
+      "expected_output": "Draft for review; then rfc-management Playbook A—.spec/ROADMAP.md row, .spec/rfc/NNNN-slug.md, .spec/TASK_TRACKING.md tasks; no README indexes.",
       "files": []
     },
     {

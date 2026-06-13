@@ -1,13 +1,13 @@
 ---
 name: rfc-workflow
-description: Implement or review work from an RFC spec—analyze the RFC, present numbered options, get explicit approval, then execute in controlled steps. Use when the user says implement the RFC, according to RFC, or references .spec/rfc/NNNN-slug.md. After code ships, update ROADMAP and TASK_TRACKING per rfc-management. Do not skip approval gates. Pair with rfc-management when creating or archiving RFCs.
+description: Implement or review work from an RFC spec—analyze the RFC under .spec/rfc/, present numbered options, get explicit approval, then execute in controlled steps. Use when the user says implement the RFC, according to RFC, or references .spec/rfc/NNNN-slug.md. After code ships, update .spec/ROADMAP.md and .spec/TASK_TRACKING.md per rfc-management. Do not skip approval gates. Pair with rfc-management when creating or archiving RFCs.
 ---
 
 # RFC workflow
 
 Turn an **approved RFC** into code (or analysis-only review) with explicit human checkpoints: **analyze → choose scope → plan → execute**.
 
-**File hygiene** (ROADMAP, TASK_TRACKING, archives) is **rfc-management** — use that skill when creating RFCs, changing status, or closing work.
+**File hygiene** (`.spec/ROADMAP.md`, `.spec/TASK_TRACKING.md`, archives) is **rfc-management** — use that skill when creating RFCs, changing status, or closing work.
 
 ## When to use which skill
 
@@ -23,9 +23,9 @@ Turn an **approved RFC** into code (or analysis-only review) with explicit human
 
 ## Phase 0 — Locate the spec
 
-1. Resolve RFC path (e.g. `.spec/rfc/0042-feature.md`) or id from **ROADMAP** index.
+1. Resolve RFC path (e.g. `.spec/rfc/0042-feature.md`) or id from **`.spec/ROADMAP.md`** index.
 2. Read ROADMAP row for status — if not `Approved`, stop and ask or use rfc-management to advance status.
-3. Read RFC body; read **TASK_TRACKING** for related open tasks (do not add tasks inside the RFC).
+3. Read RFC body; read **`.spec/TASK_TRACKING.md`** for related open tasks (do not add tasks inside the RFC).
 
 ## Phase 1 — RFC analysis
 
@@ -48,8 +48,8 @@ After yes:
 
 1. One logical unit at a time.
 2. Show meaningful diffs before applying when changes are large or risky.
-3. Map each step to TASK_TRACKING items (update tracker via rfc-management rules, not inside RFC files).
-4. On completion: hand off to **rfc-management Playbook C** — ROADMAP `Implemented`, archive RFC, check off tasks.
+3. Map each step to `.spec/TASK_TRACKING.md` items (update tracker via rfc-management rules, not inside RFC files).
+4. On completion: hand off to **rfc-management Playbook C** — `.spec/ROADMAP.md` `Implemented`, archive RFC under `.spec/rfc/completed/`, check off tasks.
 
 Use Phase 4 decision menu from [references/workflow-templates.md](references/workflow-templates.md) when the user needs to steer mid-flight.
 
@@ -63,15 +63,15 @@ Use Phase 4 decision menu from [references/workflow-templates.md](references/wor
 | Implementation notes | Files, packages, CI |
 | Alternatives | Do not re-litigate rejected paths |
 
-Tasks are **not** in the RFC — read **TASK_TRACKING.md**.
+Tasks are **not** in the RFC — read **`.spec/TASK_TRACKING.md`**.
 
 ## Creating a new RFC during workflow
 
 If the user wants a spec before coding:
 
-1. Use **rfc-management Playbook A** (ROADMAP + RFC file + TASK_TRACKING).
+1. Use **rfc-management Playbook A** (`.spec/ROADMAP.md` + `.spec/rfc/` file + `.spec/TASK_TRACKING.md`).
 2. Present draft for review; advance to **Approved** before Phase 1 implementation work.
-3. Naming: `NNNN-kebab-slug.md` (four-digit id from ROADMAP).
+3. Naming: `.spec/rfc/NNNN-kebab-slug.md` (four-digit id from `.spec/ROADMAP.md`).
 
 ## Safety habits
 

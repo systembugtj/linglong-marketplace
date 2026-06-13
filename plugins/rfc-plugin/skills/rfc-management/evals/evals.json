@@ -4,19 +4,19 @@
     {
       "id": 1,
       "prompt": "RFC 0012 is approved and merged. Repo uses .spec/ROADMAP.md and .spec/TASK_TRACKING.md. What files do you touch?",
-      "expected_output": "Move RFC to rfc/completed/; ROADMAP status Implemented; TASK_TRACKING items checked done; no README indexes; same change set.",
+      "expected_output": "Move RFC to .spec/rfc/completed/; .spec/ROADMAP.md status Implemented; .spec/TASK_TRACKING.md items checked done; no README indexes; same change set.",
       "files": []
     },
     {
       "id": 2,
       "prompt": "linglong-marketplace: propose RFC 0004 for a notification bridge. Only ROADMAP and TASK_TRACKING under .spec/.",
-      "expected_output": "ROADMAP index row Draft; create .spec/rfc/0004-….md with spec sections only; TASK_TRACKING tasks with RFC 0004; no .spec/README or rfc/README; no tasks inside RFC body.",
+      "expected_output": ".spec/ROADMAP.md index row Draft; create .spec/rfc/0004-….md with spec sections only; .spec/TASK_TRACKING.md tasks with RFC 0004; no .spec/README or rfc/README; no tasks inside RFC body.",
       "files": []
     },
     {
       "id": 3,
       "prompt": "User wants to implement RFC 0003. Which skill first?",
-      "expected_output": "Confirm Approved in ROADMAP; then rfc-workflow for implementation; after merge rfc-management Playbook C for Implemented and tracker.",
+      "expected_output": "Confirm Approved in .spec/ROADMAP.md; then rfc-workflow for implementation; after merge rfc-management Playbook C for Implemented and .spec/TASK_TRACKING.md.",
       "files": []
     }
   ]
