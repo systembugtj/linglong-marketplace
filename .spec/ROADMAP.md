@@ -42,3 +42,8 @@ Deliverables: `site/`, `install.sh`, `ll-skills` / `ll-catalog`, README ↔ Page
 - **Body sections:** Summary, Motivation, Proposal, Implementation notes, Alternatives (optional)
 - **Tasks:** only in [TASK_TRACKING.md](TASK_TRACKING.md) — never duplicate checklists in RFC files
 - **Archive:** move to `rfc/completed/` or `rfc/rejected/` and update this file in the same change set
+| 0006 | [Skill index marketplace redesign (Umbrella)](rfc/0006-skill-index-marketplace.md) | Draft |
+| 0007 | [Folder-based skill index and PR acceptance (child of 0006)](rfc/0007-folder-index-pr-gate.md) | Draft |
+| 0008 | [Pinned refs and supply-chain security (child of 0006)](rfc/0008-pinned-refs-security.md) | Draft |
+| 0009 | [linglong CLI: search, add, outdated (child of 0006)](rfc/0009-linglong-cli.md) | Draft |
+| 0010 | [Migrate existing skills to *ify repos (child of 0006)](rfc/0010-migrate-skills-to-ify-repos.md) | Draft |

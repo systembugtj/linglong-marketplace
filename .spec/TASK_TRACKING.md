@@ -2,6 +2,14 @@
 
 Operational tasks linked to [RFCs](rfc/). Mark **Done** when merged to `main`.
 
+## Active
+
+- [ ] Implement RFC 0006: Skill index marketplace redesign (Umbrella) (RFC 0006)
+  - [ ] Implement RFC 0007: Folder-based skill index and PR acceptance (child of 0006) (RFC 0007)
+  - [ ] Implement RFC 0008: Pinned refs and supply-chain security (child of 0006) (RFC 0008)
+  - [ ] Implement RFC 0009: linglong CLI: search, add, outdated (child of 0006) (RFC 0009)
+  - [ ] Implement RFC 0010: Migrate existing skills to *ify repos (child of 0006) (RFC 0010)
+
 ## Done
 
 - [x] Restructure plugins as `tauri-plugin`, `rfc-plugin`, `macos-swiftpm-plugin` (RFC 0002)
