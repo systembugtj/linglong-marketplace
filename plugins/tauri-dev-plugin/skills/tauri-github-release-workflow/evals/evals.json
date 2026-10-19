@@ -1,0 +1,35 @@
+{
+  "skill_name": "tauri-github-release-workflow",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "My release-please workflow creates the GitHub Release, but I need a separate job to build and upload Tauri binaries for each OS. How should I structure this across workflow files?",
+      "expected_output": "Split into two files connected by workflow_call: release.yml runs release-please-action and, only if release_created is true, calls upload-release-assets.yml (a workflow_call + workflow_dispatch reusable workflow) with explicit tag_name and sha outputs from release-please. workflow_dispatch on the same file also allows manual retry of a failed platform leg without cutting a new release.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Inside my reusable release-asset-upload workflow, I want different behavior for workflow_call vs workflow_dispatch triggers. I tried `if: github.event_name == 'workflow_call'` and it never matches. Why?",
+      "expected_output": "A reusable workflow invoked via workflow_call still reports the caller's original trigger as github.event_name (e.g. push), not 'workflow_call' — that value never appears as event_name inside the callee. Branch on github.event_name == 'workflow_dispatch' instead, and treat everything else as the workflow_call path (using the passed-in inputs).",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "My Tauri release CI is all green across every OS matrix leg, GitHub Releases shows the installers, but the in-app updater never finds the new version. What's the most likely cause and how do I catch this in CI next time?",
+      "expected_output": "bundle.createUpdaterArtifacts is probably false or misconfigured in tauri.conf.json — the build and upload succeed, installers land fine, but no signed latest.json is produced, so the updater endpoint 404s. Add a post-matrix verification job (after all platform legs finish, using needs + if: always()) that downloads latest.json via gh release download and checks with jq that each expected platform key has non-empty url and signature fields — not just that the filename exists in the asset list.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "My release build matrix has ubuntu-latest, macos-latest, windows-latest. Should I use fail-fast true or false, and why does it matter for a release specifically?",
+      "expected_output": "Use fail-fast: false for release-upload matrices. With the default fail-fast: true, if one platform's build/upload fails, GitHub Actions cancels the still-running legs — including ones that already successfully uploaded an asset — which can leave a release with an inconsistent or missing platform's binary even though that leg would have succeeded. fail-fast: false lets every platform run to completion independently.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "Adding Windows support to my Tauri release matrix — the FFmpeg/MSVC setup step runs on every OS even though I only need it on Windows, wasting CI minutes. I already have `if: runner.os == 'Windows'` inside the composite action's steps.",
+      "expected_output": "Move the if condition to the workflow-step level (the step that does `uses: ./.github/actions/setup-windows-msvc`), not inside the composite action itself. A workflow-level if skips downloading/checking out the action entirely on non-matching runners; an if condition only inside the composite action's internal steps still triggers the action download on every OS before it evaluates the condition and no-ops.",
+      "files": []
+    }
+  ]
+}

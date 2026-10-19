@@ -1,10 +1,10 @@
 {
   "name": "tauri-dev-plugin",
-  "version": "1.5.0",
-  "description": "General Tauri v2 development toolkit — dev/prod isolation, production theme CSS bundling, macOS keyboard shortcuts and native Help menu diagnostics, updater signing/config, plus pnpm monorepo conventions",
+  "version": "1.6.0",
+  "description": "General Tauri v2 development toolkit — dev/prod isolation, production theme CSS bundling, macOS keyboard shortcuts and native Help menu diagnostics, updater signing/config, GitHub Actions release-please + tauri-action release pipeline design, plus pnpm monorepo conventions",
   "author": {
     "name": "Linglong"
   },
   "license": "MIT",
-  "keywords": ["tauri", "desktop", "updater", "dev-prod-isolation", "theme", "macos", "keyboard", "help-menu", "muda", "global-shortcut", "vite", "css", "pnpm", "monorepo"]
+  "keywords": ["tauri", "desktop", "updater", "dev-prod-isolation", "theme", "macos", "keyboard", "help-menu", "muda", "global-shortcut", "vite", "css", "pnpm", "monorepo", "github-actions", "release-please", "ci-cd"]
 }
